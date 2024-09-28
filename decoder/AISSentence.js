@@ -61,7 +61,6 @@ class AISSentence {
     }
     checkCheckSum() {
         const checksumString = this.message.split('*')[0].substr(1); // Remove '!'
-        console.log(checksumString)
         let checksum = 0;
         // Calculate the checksum using XOR on all characters
         for (let i = 0; i < checksumString.length; i++) {

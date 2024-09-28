@@ -40,24 +40,26 @@ class AISBitHanlder {
 
     }
     getIntVal(startIndex, length) {
-        console.log(this.binaryPayload)
         // return integer value data
         return parseInt(this.binaryPayload.substr(startIndex, length), 2);
     }
     getSignedIntVal(startIndex, length) {
-        console.log(startIndex, length)
         let intVal = this.getIntVal(startIndex, length);
         // convert to signed (big-edian)
         // if highest bit == 1 
         if ((intVal & (1 << (length - 1))) !== 0) {
             intVal -= (1 << length);
         }
-        console.log(intVal)
 
         return intVal;
 
     }
-
+    charAt(message, index) {
+        if (index < 0 || index >= message.length) {
+            return '';
+        }
+        return message[index];
+    }
     getBooleanVal(startIndex, length) {
         return Boolean(this.getIntVal(startIndex, length));
     }
@@ -67,10 +69,10 @@ class AISBitHanlder {
         let stringValue = ''
         let num = Math.floor(length / 6);
         let currentIndex = 0
-        for (i = 0; i < num; i++) {
+        for (let i = 0; i < num; i++) {
             const binaryValueOfPara = binary.substr(currentIndex, 6);
             currentIndex += 6
-            sixBitVal = this.sixBitAscii(charAt(parseInt(binaryValueOfPara, 2)))
+            let sixBitVal = this.charAt(this.sixBitAscii, parseInt(binaryValueOfPara, 2))
             stringValue += sixBitVal
         }
         // remove 6 bit 0 (terminal char)

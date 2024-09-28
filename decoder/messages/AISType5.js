@@ -14,11 +14,11 @@ class AISType5 extends AISMessage {
         this.dimPort = bitHandler.getIntVal(258, 6);
         this.dimStarboard = bitHandler.getIntVal(264, 6);
         this.epfd = bitHandler.getIntVal(270, 4);
-        this.etaMonth = format.month(bitHandler.getIntVal(274, 4));
-        this.etaDay = format.day(bitHandler.getIntVal(278, 5));
-        this.etaHour = format.hour(bitHandler.getIntVal(283, 5));
-        this.etaMinute = format.minute(bitHandler.getIntVal(288, 6));
-        this.draught = format.draught(bitHandler.getIntVal(294, 8));
+        this.etaMonth = formatter.month(bitHandler.getIntVal(274, 4));
+        this.etaDay = formatter.day(bitHandler.getIntVal(278, 5));
+        this.etaHour = formatter.hour(bitHandler.getIntVal(283, 5));
+        this.etaMinute = formatter.minute(bitHandler.getIntVal(288, 6));
+        this.draught = formatter.draught(bitHandler.getIntVal(294, 8));
         this.destination = bitHandler.getStringVal(302, 120);
         this.dte = bitHandler.getBooleanVal(422, 1);
 

@@ -9,8 +9,10 @@ import { AISType8 } from "./messages/AISType8.js";
 import { AISType18 } from "./messages/AISType18.js";
 import { AISType24 } from "./messages/AISType24.js";
 class AISDecoder {
+
     constructor() {
         this.formatter = new AISFormatter();
+        this.buffer = []
     }
     decode(message) {
         const sentence = new AISSentence(message);
@@ -22,7 +24,6 @@ class AISDecoder {
     }
     handleDecodeMessage(payload, channel) {
         const bitHandler = new AISBitHanlder(payload);
-        console.log(bitHandler)
         const messageType = bitHandler.getIntVal(0, 6);
         let decodedMsg = null;
         switch (messageType) {
@@ -51,8 +52,26 @@ class AISDecoder {
             console.log(JSON.stringify(decodedMsg))
         }
     }
-    handlerMultiFragmentsMessage() {
+    handlerMultiFragmentsMessage(sentence) {
+        console.log(`test`)
+        let fragmentId = sentence.fragmentId
+        if (!this.buffer[fragmentId]) {
+            this.buffer[fragmentId] = [];
+        }
 
+        this.buffer[fragmentId].push(sentence)
+
+        if (sentence.isFinishAMessage()) {
+            if (this.buffer[fragmentId].length != sentence.countOfFragments) {
+                this.buffer[fragmentId] = []
+                throw new Error(`Fragment mismatch for ID ${fragmentId}: expected ${sentence.countOfFragments}, but got ${this.buffer[fragmentId].length}`);
+
+            }
+            console.log("Message complete!", this.buffer[fragmentId]);
+            const payloads = this.buffer[fragmentId].map(sentence => sentence.payload)
+            this.buffer[fragmentId] = []
+            this.handleDecodeMessage(payloads.join(''), sentence.channel)
+        }
     }
 }
 
