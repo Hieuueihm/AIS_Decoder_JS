@@ -28,6 +28,7 @@ class AISBitHanlder {
         this.binaryPayload = ''
         this.payload = payload
         for (let i = 0; i < this.payload.length; i++) {
+            // console.log(this.payload.charCodeAt(i))
             let asciiValue = this.payload.charCodeAt(i) - 48;
             if (asciiValue > 40) {
                 asciiValue -= 8;
@@ -38,10 +39,13 @@ class AISBitHanlder {
 
         }
 
+
+
     }
     getIntVal(startIndex, length) {
         // return integer value data
-        return parseInt(this.binaryPayload.substr(startIndex, length), 2);
+        const binary = this.binaryPayload.substr(startIndex, length);
+        return parseInt(binary, 2);
     }
     getSignedIntVal(startIndex, length) {
         let intVal = this.getIntVal(startIndex, length);

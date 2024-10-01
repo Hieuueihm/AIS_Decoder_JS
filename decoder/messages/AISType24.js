@@ -3,7 +3,18 @@ import { AISMessage } from "./AISMessage.js";
 class AISType24 extends AISMessage {
     constructor(messageType, channel, bitHandler, formatter) {
         super(messageType, channel, bitHandler);
-        this.partNum = bitHandler.getInt(38, 2);
+        this.partNum = bitHandler.getIntVal(38, 2);
+        this.name = ""
+        this.typeAndCargo = "";
+        this.vendorId = "";
+        this.model = ""
+        this.serial = ""
+        this.callsign = ""
+        this.mothershipMMSI = ""
+        this.dimBow = ""
+        this.dimStern = ""
+        this.dimPort = ""
+        this.dimStarboard = ""
 
         if (this.partNum === 0) {
             this.setPartAProperties(bitHandler);

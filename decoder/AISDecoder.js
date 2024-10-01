@@ -15,15 +15,20 @@ class AISDecoder {
         this.buffer = []
     }
     decode(message) {
+        console.log(message)
+        let res = null
         const sentence = new AISSentence(message);
         if (sentence.isMultiFragments()) {
             this.handlerMultiFragmentsMessage(sentence);
         } else {
-            this.handleDecodeMessage(sentence.payload, sentence.channel);
+            res = this.handleDecodeMessage(sentence.payload, sentence.channel);
         }
+        return res
     }
     handleDecodeMessage(payload, channel) {
+        console.log(payload)
         const bitHandler = new AISBitHanlder(payload);
+        console.log(bitHandler)
         const messageType = bitHandler.getIntVal(0, 6);
         let decodedMsg = null;
         switch (messageType) {
@@ -50,10 +55,10 @@ class AISDecoder {
         }
         if (decodedMsg) {
             console.log(JSON.stringify(decodedMsg))
+            return decodedMsg
         }
     }
     handlerMultiFragmentsMessage(sentence) {
-        console.log(`test`)
         let fragmentId = sentence.fragmentId
         if (!this.buffer[fragmentId]) {
             this.buffer[fragmentId] = [];
@@ -61,11 +66,11 @@ class AISDecoder {
 
         this.buffer[fragmentId].push(sentence)
 
+
         if (sentence.isFinishAMessage()) {
             if (this.buffer[fragmentId].length != sentence.countOfFragments) {
                 this.buffer[fragmentId] = []
                 throw new Error(`Fragment mismatch for ID ${fragmentId}: expected ${sentence.countOfFragments}, but got ${this.buffer[fragmentId].length}`);
-
             }
             console.log("Message complete!", this.buffer[fragmentId]);
             const payloads = this.buffer[fragmentId].map(sentence => sentence.payload)
