@@ -38,7 +38,7 @@ class AISType24 extends AISMessage {
         this.serial = bitHandler.getIntVal(70, 20);
         this.callsign = bitHandler.getStringVal(90, 42);
 
-        if (isAuxiliaryCraft(this.mmsi)) {
+        if (this.isAuxiliaryCraft(this.mmsi)) {
             this.mothershipMMSI = bitHandler.getIntVal(132, 30);
         } else {
             this.dimBow = bitHandler.getIntVal(132, 9);

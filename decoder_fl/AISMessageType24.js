@@ -26,32 +26,32 @@ if (partNum == 0) {
         length: 120,
     });
 } else if (partNum == 1) {
-    (typeAndCargo = await me.getInt({
+    typeAndCargo = await me.getInt({
         binaryPayload: payload,
         startIndex: 40,
         length: 8,
-    })),
-        vendorId -
-        (await me.getString({
+    })
+    vendorId =
+        await me.getStringVal({
             binaryPayload: payload,
             startIndex: 48,
             length: 18,
-        })),
-        (model = await me.getInt({
-            binaryPayload: payload,
-            startIndex: 66,
-            length: 4,
-        })),
-        (serial = await me.getInt({
-            binaryPayload: payload,
-            startIndex: 70,
-            length: 20,
-        })),
-        (callsign = await me.getString({
-            binaryPayload: payload,
-            startIndex: 90,
-            length: 42,
-        }));
+        })
+    model = await me.getInt({
+        binaryPayload: payload,
+        startIndex: 66,
+        length: 4,
+    })
+    serial = await me.getInt({
+        binaryPayload: payload,
+        startIndex: 70,
+        length: 20,
+    })
+    callsign = await me.getStringVal({
+        binaryPayload: payload,
+        startIndex: 90,
+        length: 42,
+    })
     if (await me.isAuxiliaryCraft({ mmsi: baseMessage.mmsi })) {
         mothershipMMSI = await me.getInt({
             binaryPayload: payload,

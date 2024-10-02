@@ -1,21 +1,21 @@
 if (transport_type_code[0] == 7) {
-    return "Tàu chở hàng"
+    return "cargo"
 }
 else if (transport_type_code[0] == 8) {
-    return "Tàu chở dầu"
+    return "oil"
 } else if (transport_type_code[0] == 6) {
-    return "Tàu chở khách"
+    return "passenger"
 
 } else if (transport_type_code[0] == 4) {
-    return "Tàu cao tốc"
+    return "highspeed"
     // tàu cao tốc
 } else if (transport_type_code == 30) {
-    return "Tàu cá"
+    return "fish"
 } else if (transport_type_code == 37) {
-    return "Tàu du lịch"
+    return "travel"
 } else if (transport_type_code[0] == 5 || transport_type_code == 34 || transport_type_code == 35) {
-    return "Tàu đặc chủng"
+    return "special"
     // tàu đặc chủng 
 } else {
-    return "Không xác định"
+    return "different"
 }

@@ -1,4 +1,6 @@
 let project_id = JSON?.parse(entityInfo)?.project_id;
+/*normalize message*/
+payload = await me.messageNormalization({ message: payload })
 /*Decode message */
 let decoded_message = await me.AIS_Decoder({ payload: payload });
 if (decoded_message.errCode == -1) {
@@ -6,6 +8,19 @@ if (decoded_message.errCode == -1) {
 }
 decoded_message = decoded_message?.message
 let mmsi = decoded_message?.mmsi;
+// get messageType
+let messageType = decoded_message.messageType;
+if (
+    messageType != 1 &&
+    messageType != 2 &&
+    messageType != 3 &&
+    messageType != 5 &&
+    messageType != 18 &&
+    messageType != 19 &&
+    messageType != 24
+) {
+    return decoded_message;
+}
 /*check device exist*/
 let checkDevice = await me.keyDeviceInfo({
     device_key: mmsi?.toString(),
@@ -31,19 +46,7 @@ if (device_id == null) {
         Error: "Device id  not found",
     };
 }
-// get messageType
-let messageType = decoded_message.messageType;
-if (
-    messageType != 1 &&
-    messageType != 2 &&
-    messageType != 3 &&
-    messageType != 5 &&
-    messageType != 18 &&
-    messageType != 19 &&
-    messageType != 24
-) {
-    return decoded_message;
-}
+
 // wrap attrs
 let attrs = await me.AIS_Attrs({
     decoded_message: decoded_message,
@@ -56,10 +59,12 @@ let timestamp = Date.now();
 
 let res = "";
 if (messageType == 5 || messageType == 24) {
-    let type_transport = attrs.type_transport;
+    let type_transport = attrs?.type_transport;
+    let status = attrs?.status
     attrs = {
-        ...attrs.data,
+        ...attrs?.data,
         type_transport: type_transport,
+        status: status
     };
     res = await Thing(device_id).UpsertAttributes(attrs, {
         logged: false,
@@ -72,17 +77,20 @@ if (messageType == 5 || messageType == 24) {
     messageType == 18
 ) {
     let status = attrs?.status;
+    let type_transport = attrs?.type_transport
     attrs = {
         ...attrs?.data,
-        status: status,
     };
     let timestamp = Date.now();
-    res = await Thing(device_id).UpsertAttributes(attrs, {
+    res = await me.UpsertAttributeWs({ device_id: device_id, attrs: attrs?.datas, ts: timestamp })
+
+    res = await Thing(device_id).UpsertAttributes({
+        status: status,
+        type_transport: type_transport
+    }, {
         notSendWs: false,
-        logged: true,
         entityType: "DEVICE",
-        ts: timestamp,
-    });
+    })
 } else if (messageType == 19) {
     let type_transport = attrs?.type_transport;
 
@@ -101,6 +109,7 @@ if (messageType == 5 || messageType == 24) {
         ...attrs?.data?.datasKey,
     };
     let timestamp = Date.now();
+    res = await me.UpsertAttributeWs({ device_id: device_id, attrs: upsertAttrs?.datas, ts: timestamp })
     res = await Thing(device_id).UpsertAttributes(upsertAttrs, {
         notSendWs: false,
         logged: true,
@@ -109,6 +118,7 @@ if (messageType == 5 || messageType == 24) {
     });
 }
 return {
+    messageType: messageType,
     created_device: created_device,
     project_id: project_id,
     checkDevice: checkDevice,

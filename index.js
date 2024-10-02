@@ -2,7 +2,7 @@ import AISDecoder from "./decoder/index.js";
 const decoder = new AISDecoder();
 
 
-let msg = ["!AIVDM,1,1,,B,H6P<:T0000000000N99ti000000000,0*1C"]
+let msg = ["!AIVDM,1,1,,B,H8Sje5U60000000PPPPPPP7P?330,0*57"]
 let res = decoder.decode(msg[0])
 console.log(res)
 
