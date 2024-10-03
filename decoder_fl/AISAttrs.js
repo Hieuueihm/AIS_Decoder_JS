@@ -36,24 +36,23 @@ if (
     let type_transport = "different"
     if (data_lastest.success == true) {
         dataInfo = data_lastest?.data?.entitiesList[0]?.attributesList[0]?.value
-        type_transport = data_lastest?.data?.entitiesList[0]?.value?.type_transport
+        type_transport = data_lastest?.data?.entitiesList[0]?.attributesList[0]?.value?.type_transport
     }
     let datas = {
         ...dataInfo,
         status: navigational_status,
-        type_transport: type_transport,
         direction: heading,
         latitude: decoded_message.lat == 91 ? null : decoded_message.lat,
         longitude: decoded_message.lon == 181 ? null : decoded_message.lon,
         speed:
             decoded_message.speedOverGround == 1023
                 ? null
-                : decoded_message.speedOverGround * 1.852,
+                : decoded_message.speedOverGround * 1.852.toFixed(2),
         timestamp: timestamp_now,
-        MMSI: mmsi,
+        MSSI: mmsi,
         nation: nation,
         startLocation: null,
-        last_update_ts: timestamp_now,
+        last_updated_ts: timestamp_now,
         departureTime: null,
         aisStation: "Cát Lái",
         // }
@@ -61,10 +60,10 @@ if (
     return {
         errCode: 0,
         data: { datas: datas },
-        status: navigational_status,
+        status: (messageType == 18) ? "undefined" : navigational_status,
         type_transport: type_transport
     };
-} else if (messageType == 5 || messageType == 24) {
+} else if (messageType == 5) {
     // static data report
     // static data
     let eta = "";
@@ -73,6 +72,7 @@ if (
         eta = `${year}-${`0${decoded_message.etaMonth}`.slice(-2)}-${`0${decoded_message.etaDay}`.slice(-2)}T${`0${decoded_message.etaHour}`.slice(-2)}:${`0${decoded_message.etaMinute}`.slice(-2)}:00`;
         eta = Date.parse(eta);
     }
+
     let keys = [];
     keys.push("status");
     let ids = [];
@@ -82,9 +82,9 @@ if (
         ids: ids,
         entityType: "DEVICE",
     });
-    let status = "Undefined"
+    let status = "undefined"
     if (data_lastest.success == true) {
-        status = data_lastest?.data?.entitiesList[0]?.value
+        status = data_lastest?.data?.entitiesList[0]?.attributesList[0]?.value
     }
 
     let dataInfo = {
@@ -97,8 +97,8 @@ if (
             length: decoded_message.dimBow + decoded_message.dimStern,
             width: decoded_message.dimPort + decoded_message.dimStarboard,
         },
-        draftMark: messageType == 5 ? decoded_message.draught : "",
-        desLocation: messageType == 5 ? decoded_message.destination : "",
+        draftMark: decoded_message.draught,
+        desLocation: decoded_message.destination,
         estimatedTime: eta,
     };
     return {
@@ -111,6 +111,44 @@ if (
         }),
         status: status
     };
+} else if (messageType == 24) {
+    let partNum = decoded_message?.partNum;
+    let keys = [];
+    keys.push("dataInfo");
+    let ids = [];
+    ids.push(device_id);
+    let data_lastest = await Things().GetAttributesLatest({
+        keys: keys,
+        ids: ids,
+        entityType: "DEVICE",
+    });
+    let dataInfo_lastest = null;
+    if (data_lastest.success == true) {
+        dataInfo_lastest = data_lastest?.data?.entitiesList[0]?.attributesList[0]?.value
+    }
+    let dataInfo = {
+        name: (partNum == 0) ? decoded_message.name : dataInfo_lastest?.name,
+        signalCall: (partNum == 1) ? decoded_message.signalCall : dataInfo_lastest?.signalCall,
+        type_transport: (partNum == 1) ? await me.AIS_Type_Transport({
+            transport_type_code: decoded_message.typeAndCargo.toString(),
+        }) : dataInfo_lastest?.type_transport,
+        sizeShip: {
+            length: (partNum == 1) ? decoded_message.dimBow + decoded_message.dimStern : dataInfo_lastest?.sizeShip?.length,
+            width: (partNum == 1) ? decoded_message.dimPort + decoded_message.dimStarboard : dataInfo_lastest?.sizeShip?.width,
+        },
+        draftMark: (partNum == 1) ? decoded_message.draught : dataInfo_lastest?.draftMark,
+        desLocation: (partNum == 1) ? decoded_message.destination : dataInfo_lastest?.desLocation,
+        estimatedTime: dataInfo_lastest?.estimatedTime,
+    };
+    return {
+        errCode: 0,
+        data: {
+            dataInfo: dataInfo
+        },
+        type_transport: (partNum == 0) ? data_lastest?.type_transport : await me.AIS_Type_Transport({
+            transport_type_code: decoded_message.typeAndCargo.toString(),
+        })
+    }
 } else if (messageType == 19) {
     /**datas */
     let heading = decoded_message.heading;
@@ -124,12 +162,12 @@ if (
         speed:
             decoded_message.speedOverGround == 1023
                 ? null
-                : decoded_message.speedOverGround * 1.852,
+                : decoded_message.speedOverGround * 1.852.toFixed(2),
         timestamp: timestamp_now,
-        MMSI: mmsi,
+        MSSI: mmsi,
         nation: nation,
         startLocation: null,
-        last_update_ts: timestamp_now,
+        last_updated_ts: timestamp_now,
         departureTime: null,
         aisStation: "Cát Lái",
     }

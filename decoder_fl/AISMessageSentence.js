@@ -22,7 +22,7 @@ return {
     fragmentId: fields[3],
     channel: fields[4],
     payload: fields[5],
-    checksum: posStr[1],
+    checksum: posStr[1].slice(0, 2),
     errCode: 0
 
 }

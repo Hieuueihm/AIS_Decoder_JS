@@ -64,12 +64,17 @@ if (messageType == 5 || messageType == 24) {
     attrs = {
         ...attrs?.data,
         type_transport: type_transport,
-        status: status
     };
     res = await Thing(device_id).UpsertAttributes(attrs, {
         logged: false,
         entityType: "DEVICE",
     });
+    if (messageType == 5) {
+        res = await Thing(device_id).UpsertAttributes({ status: status }, {
+            logged: false,
+            entityType: "DEVICE",
+        });
+    }
 } else if (
     messageType == 1 ||
     messageType == 2 ||
@@ -82,7 +87,8 @@ if (messageType == 5 || messageType == 24) {
         ...attrs?.data,
     };
     let timestamp = Date.now();
-    res = await me.UpsertAttributeWs({ device_id: device_id, attrs: attrs?.datas, ts: timestamp })
+    res = await me.UpsertAttributeWs({ device_id: device_id, attrs: attrs, ts: timestamp })
+
 
     res = await Thing(device_id).UpsertAttributes({
         status: status,
@@ -109,7 +115,7 @@ if (messageType == 5 || messageType == 24) {
         ...attrs?.data?.datasKey,
     };
     let timestamp = Date.now();
-    res = await me.UpsertAttributeWs({ device_id: device_id, attrs: upsertAttrs?.datas, ts: timestamp })
+    res = await me.UpsertAttributeWs({ device_id: device_id, attrs: upsertAttrs, ts: timestamp })
     res = await Thing(device_id).UpsertAttributes(upsertAttrs, {
         notSendWs: false,
         logged: true,

@@ -87,6 +87,8 @@ if (partNum == 0) {
 }
 return {
     ...baseMessage,
+    partNum: partNum
+    name: name,
     partNum: partNum,
     typeAndCargo: typeAndCargo,
     vendorId: vendorId,
@@ -96,7 +98,6 @@ return {
     mothershipMMSI: mothershipMMSI,
     dimBow: dimBow,
     dimStern: dimStern,
-
     dimPort: dimPort,
     dimStarboard: dimStarboard,
 };

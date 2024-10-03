@@ -5,9 +5,69 @@ import socket
 client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 server_address = ('117.1.29.217', 30052) 
 client_socket.connect(server_address)
+bu = []
+data = [
+    # "!AIVDM,1,1,,B,H8Sje5U60000000PPPPPPP7P?330,0*57"
+    "!AIVDM,1,1,,B,B8SjbDP001q4vAS1<hf@ekuTSP06,0*69"
+    # "!AIVDM,1,1,,A,H8SjaIE@00000008@Pjqop8h?550,0*01"
+    # "!AIVDM,1,1,,A,H8SjbDPdTDr04pR3KJ222222220,2*39"
+    ]
+client_socket.sendall(data[0].encode('utf-8'))
 
-data = "!AIVDM,1,1,,B,H8Sje5U60000000PPPPPPP7P?330,0*57\r\n"
-client_socket.sendall(data.encode('utf-8'))
+def reconnect_socket():
+    global client_socket
+    while True:
+        try:
+            client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+            client_socket.connect(('117.1.29.217', 30052))  # Replace with your server IP and port
+            print("Reconnected to the server.")
+            for data in bu:
+                client_socket.sendall(data.encode('utf-8'))
+            bu.clear()
+            break
+        except socket.error as e:
+            print(f"Reconnection failed: {e}. Retrying in 5 seconds...")
+            client_socket.close()
+            time.sleep(5)
+ais_data = ["!AIVDM,1,1,,B,H8Sje5U60000000PPPPPPP7P?330,0*57\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0EQpw2c31H6AH56H4SP06,0*73\r\n",
+"!AIVDM,1,1,,A,H8SjaIE@00000008@Pjqop8h?550,0*01\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0Eipw>>S1FL1GE5aTSP06,0*4B\r\n",
+"!AIVDM,1,1,,A,B8SjaI@0Fipwc031BbuDU3pTSP06,0*12\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0GQpwpnS1A6=CU2aTSP06,0*0D\r\n",
+"!AIVDM,1,1,,B,H8SjaIA1A>3;B22222222222220,2*01\r\n",
+"!AIVDM,1,1,,B,H8SjaIE@00000008@Pjqop8h?550,0*02\r\n",
+"!AIVDM,1,1,,A,B8SjaI@0H1q03131@1AAi1:TSP06,0*47\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0H1q07v31?QiA90q4SP06,0*4A\r\n",
+"!AIVDM,1,1,,A,B8SjaI@0H1q0=DS1?1E@U0:TSP06,0*1B\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0Giq0BO31>RE@=0ITSP06,0*22\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0GAq0Lm31=V1?8wITSP06,0*68\r\n",
+"!AIVDM,1,1,,A,B8SjaI@0Eiq0c`31<Cq>Lvb4SP06,0*08\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0E1q0rV31;6=<luJ4SP06,0*43\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0DAq0w@S1:h1<<tbTSP06,0*0B\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0Ciq18vS1:5A:Tsc4SP06,0*79\r\n",
+"!AIVDM,1,1,,B,B8SjaI@0CQq1BDS19Mu:HsbTSP06,0*3B\r\n",
+"!AIVDM,1,1,,A,B8SjaI@0CQq1GA319:59Trr4SP06,0*01\r\n",
+]
+
+
+# Append \r\n to each message and store in a list
+# ais_data_with_newline = [line + '\r\n' for line in ais_data]
+
+# Print the result
+# for line in ais_data_with_newline:
+#     print(repr(line))
+
+# data = "!AIVDM,1,1,,B,B8SjaI@0E1q0rV31;6=<luJ4SP06,0*43\r\n"
+# for i  in range(0, 20):
+#     time.sleep(1)
+#     print(ais_data[i])
+#     try:
+#         client_socket.sendall(ais_data[i].encode('utf-8'))
+#         print(f"Sent: {ais_data[i]}")
+#     except socket.error as e:
+#         print(f"Error sending message: {e}. Reconnecting...")
+#         reconnect_socket()
 # datas = [
 #     # "!AIVDM,1,1,,B,C69DqeP0Ar8;JH3R6<4O7wWPl@:62L>jcaQgh0000000?104222P,0*32" 
 #     "!AIVDM,1,1,,B,38SK5`jP007b1:0<0OJk3wwV00:k,0*61"
@@ -28,18 +88,7 @@ def calculate_checksum(data):
         checksum ^= ord(char)
     return checksum
 
-def reconnect_socket():
-    global client_socket
-    while True:
-        try:
-            client_socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-            client_socket.connect(('s117.1.29.217', 30052))  # Replace with your server IP and port
-            print("Reconnected to the server.")
-            break
-        except socket.error as e:
-            print(f"Reconnection failed: {e}. Retrying in 5 seconds...")
-            client_socket.close()
-            time.sleep(5)
+
 
 def combine_message(msgs):
     format1 = msgs[0].split(',')
@@ -97,13 +146,11 @@ buffer = {}
 # try:
 #     while True:
 #         # Read a line from the serial port
-#         data = ser.readline().decode('utf-8').strip()
-
+#         data = ser.readline().decode('utf-8')
 #         if data:
 #             print(f"Received: {data}")
 #             with open("test.txt", "a") as file:
 #                 file.write(data)
-#                 file.write('\n')
             
 #             msgs_format = data.split(',')
 #             print(msgs_format)
@@ -123,6 +170,7 @@ buffer = {}
 #                         client_socket.sendall(new_msgs.encode('utf-8'))
 #                         print(f"Sent: {new_msgs}")
 #                     except socket.error as e:
+#                         bu.append(new_msgs)
 #                         print(f"Error sending message: {e}. Reconnecting...")
 #                         reconnect_socket()
 #             else:
@@ -130,6 +178,7 @@ buffer = {}
 #                     client_socket.sendall(data.encode('utf-8'))
 #                     print(f"Sent: {data}")
 #                 except socket.error as e:
+#                     bu.append(data)
 #                     print(f"Error sending message: {e}. Reconnecting...")
 #                     reconnect_socket()
 
@@ -139,7 +188,7 @@ buffer = {}
 #     ser.close()
 #     client_socket.close()
 
-# with open('generated.txt', 'r') as file:
+# with open('tcp.txt', 'r') as file:
 #     # Read each line in the file one by one
     
 #     data = file.readline()
@@ -148,7 +197,6 @@ buffer = {}
 #         time.sleep(1)
 
 #         # Process the line (print it in this case)
-#         data  = data.strip()
 #         print("data: ", data)
    
 #         msgs_format =  data.split(',')
@@ -164,19 +212,23 @@ buffer = {}
 #                 buffer[msgs_format[3]].append(data)
 #                 new_msgs = combine_message(buffer[msgs_format[3]])
 #                 del buffer[msgs_format[3]]
+#                 new_msgs = new_msgs + '\r\n'
 #                 client_socket.sendall(new_msgs.encode('utf-8'))
-#                 with open("test.txt", "a") as file1:
-#                     file1.write(new_msgs)
-#                     file1.write('\n')
-#                 print(new_msgs)
+#             try:
+#                 client_socket.sendall(new_msgs.encode('utf-8'))
+#                 print(f"Sent: {new_msgs}")
+#             except socket.error as e:
+#                 bu.append(new_msgs)
+#                 print(f"Error sending message: {e}. Reconnecting...")
+#                 reconnect_socket()
 #         else:
-#             print(data)
-#             client_socket.sendall(data.encode('utf-8'))
-#             with open("test.txt", "a") as file1:
-#                     file1.write(data)
-#                     file1.write('\n')
-
-#             print(data)
+#             try:
+#                 client_socket.sendall(data.encode('utf-8'))
+#                 print(f"Sent: {data}")
+#             except socket.error as e:
+#                 bu.append(data)
+#                 print(f"Error sending message: {e}. Reconnecting...")
+#                 reconnect_socket()
 #         data = file.readline()
 
 
