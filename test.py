@@ -12,7 +12,7 @@ data = [
     # "!AIVDM,1,1,,A,H8SjaIE@00000008@Pjqop8h?550,0*01"
     # "!AIVDM,1,1,,A,H8SjbDPdTDr04pR3KJ222222220,2*39"
     ]
-client_socket.sendall(data[0].encode('utf-8'))
+# client_socket.sendall(data[0].encode('utf-8'))
 
 def reconnect_socket():
     global client_socket
@@ -142,7 +142,7 @@ buffer = {}
 #     dsrdtr=False   # Disable hardware (DSR/DTR) flow control
 # )
 
-# # print("Reading from COM port...")
+# # # print("Reading from COM port...")
 # try:
 #     while True:
 #         # Read a line from the serial port
@@ -151,7 +151,6 @@ buffer = {}
 #             print(f"Received: {data}")
 #             with open("test.txt", "a") as file:
 #                 file.write(data)
-            
 #             msgs_format = data.split(',')
 #             print(msgs_format)
             
@@ -167,20 +166,20 @@ buffer = {}
 #                     new_msgs = combine_message(buffer[msgs_format[3]])
 #                     del buffer[msgs_format[3]]
 #                     try:
-#                         client_socket.sendall(new_msgs.encode('utf-8'))
+#                         # client_socket.sendall(new_msgs.encode('utf-8'))
 #                         print(f"Sent: {new_msgs}")
 #                     except socket.error as e:
 #                         bu.append(new_msgs)
 #                         print(f"Error sending message: {e}. Reconnecting...")
-#                         reconnect_socket()
+#                         # reconnect_socket()
 #             else:
 #                 try:
-#                     client_socket.sendall(data.encode('utf-8'))
+#                     # client_socket.sendall(data.encode('utf-8'))
 #                     print(f"Sent: {data}")
 #                 except socket.error as e:
 #                     bu.append(data)
 #                     print(f"Error sending message: {e}. Reconnecting...")
-#                     reconnect_socket()
+#                     # reconnect_socket()
 
 # except KeyboardInterrupt:
 #     print("Stopped reading.")
@@ -188,48 +187,47 @@ buffer = {}
 #     ser.close()
 #     client_socket.close()
 
-# with open('tcp.txt', 'r') as file:
-#     # Read each line in the file one by one
+with open('tcp_1.txt', 'r') as file:
+    # Read each line in the file one by one
     
-#     data = file.readline()
+    data = file.readline()
+    print("data: ", data)
 
-#     while data:
-#         time.sleep(1)
+    while data:
+        time.sleep(0.05)
 
-#         # Process the line (print it in this case)
-#         print("data: ", data)
+        # Process the line (print it in this case)
    
-#         msgs_format =  data.split(',')
-#         print(msgs_format)
-#         if(msgs_format[1] != '1'):
-#             if(msgs_format[2] == '1'):
-#                 if msgs_format[3] not in buffer:
-#                     buffer[msgs_format[3]] = []
-#                 buffer[msgs_format[3]].append(data)
-#             elif(msgs_format[2] != msgs_format[1]):
-#                 buffer[msgs_format[3]].append(data)
-#             elif(msgs_format[2] ==  msgs_format[1]):
-#                 buffer[msgs_format[3]].append(data)
-#                 new_msgs = combine_message(buffer[msgs_format[3]])
-#                 del buffer[msgs_format[3]]
-#                 new_msgs = new_msgs + '\r\n'
-#                 client_socket.sendall(new_msgs.encode('utf-8'))
-#             try:
-#                 client_socket.sendall(new_msgs.encode('utf-8'))
-#                 print(f"Sent: {new_msgs}")
-#             except socket.error as e:
-#                 bu.append(new_msgs)
-#                 print(f"Error sending message: {e}. Reconnecting...")
-#                 reconnect_socket()
-#         else:
-#             try:
-#                 client_socket.sendall(data.encode('utf-8'))
-#                 print(f"Sent: {data}")
-#             except socket.error as e:
-#                 bu.append(data)
-#                 print(f"Error sending message: {e}. Reconnecting...")
-#                 reconnect_socket()
-#         data = file.readline()
+        # msgs_format =  data.split(',')
+        # print(msgs_format)
+        # if(msgs_format[1] != '1'):
+        #     if(msgs_format[2] == '1'):
+        #         if msgs_format[3] not in buffer:
+        #             buffer[msgs_format[3]] = []
+        #         buffer[msgs_format[3]].append(data)
+        #     elif(msgs_format[2] != msgs_format[1]):
+        #         buffer[msgs_format[3]].append(data)
+        #     elif(msgs_format[2] ==  msgs_format[1]):
+        #         buffer[msgs_format[3]].append(data)
+        #         new_msgs = combine_message(buffer[msgs_format[3]])
+        #         del buffer[msgs_format[3]]
+        #         new_msgs = new_msgs + '\r\n'
+        #         try:
+        #             client_socket.sendall(new_msgs.encode('utf-8'))
+        #             print(f"Sent: {new_msgs}")
+        #         except socket.error as e:
+        #             bu.append(new_msgs)
+        #             print(f"Error sending message: {e}. Reconnecting...")
+        #             reconnect_socket()
+        # else:
+        try:
+            client_socket.sendall(data.encode('utf-8'))
+            print(f"Sent: {data}")
+        except socket.error as e:
+            bu.append(data)
+            print(f"Error sending message: {e}. Reconnecting...")
+            reconnect_socket()
+        data = file.readline()
 
 
 

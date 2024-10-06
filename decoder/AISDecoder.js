@@ -3,11 +3,10 @@ import { AISBitHanlder } from "./AISBitHandler.js";
 import { AISFormatter } from "./messages/AISFormatter.js";
 import { AISMessage } from "./messages/AISMessage.js";
 import { AISType123 } from "./messages/AISType123.js";
-import { AISType4 } from "./messages/AISType4.js";
 import { AISType5 } from "./messages/AISType5.js";
-import { AISType8 } from "./messages/AISType8.js";
 import { AISType18 } from "./messages/AISType18.js";
 import { AISType24 } from "./messages/AISType24.js";
+import fs from 'fs'
 class AISDecoder {
 
     constructor() {
@@ -19,9 +18,9 @@ class AISDecoder {
         let res = null
         const sentence = new AISSentence(message);
         if (sentence.isMultiFragments()) {
-            this.handlerMultiFragmentsMessage(sentence);
+            this.handlerMultiFragmentsMessage(sentence, message);
         } else {
-            res = this.handleDecodeMessage(sentence.payload, sentence.channel);
+            res = this.handleDecodeMessage(sentence.payload, sentence.channel, message);
         }
         return res
     }
@@ -37,14 +36,8 @@ class AISDecoder {
             case 3:
                 decodedMsg = new AISType123(messageType, channel, bitHandler, this.formatter);
                 break;
-            case 4:
-                decodedMsg = new AISType4(messageType, channel, bitHandler, this.formatter);
-                break;
             case 5:
                 decodedMsg = new AISType5(messageType, channel, bitHandler, this.formatter);
-                break;
-            case 8:
-                decodedMsg = new AISType8(messageType, channel, bitHandler, this.formatter);
                 break;
             case 18:
                 decodedMsg = new AISType18(messageType, channel, bitHandler, this.formatter);
@@ -54,11 +47,11 @@ class AISDecoder {
                 break;
         }
         if (decodedMsg) {
-            console.log(JSON.stringify(decodedMsg))
-            return decodedMsg
+            // Append the decoded result to 'output.txt'
+            console.log(decodedMsg)
         }
     }
-    handlerMultiFragmentsMessage(sentence) {
+    handlerMultiFragmentsMessage(sentence, message) {
         let fragmentId = sentence.fragmentId
         if (!this.buffer[fragmentId]) {
             this.buffer[fragmentId] = [];
@@ -75,7 +68,7 @@ class AISDecoder {
             console.log("Message complete!", this.buffer[fragmentId]);
             const payloads = this.buffer[fragmentId].map(sentence => sentence.payload)
             this.buffer[fragmentId] = []
-            this.handleDecodeMessage(payloads.join(''), sentence.channel)
+            this.handleDecodeMessage(payloads.join(''), sentence.channel, message)
         }
     }
 }

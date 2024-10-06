@@ -1,16 +1,16 @@
-import AISDecoder from "./decoder/index.js";
+import fs from 'fs';
+import AISDecoder from './decoder/index.js';  // Import your decoder
+
 const decoder = new AISDecoder();
-
-
-let msg = ["!AIVDM,1,1,,A,H8SjbDPdTDr04pR3KJ222222220,2*39"]
-let res = decoder.decode(msg[0])
-console.log(res)
+let msg = ["!AIVDM,2,1,3,A,58SJsdH000000000001@P4pR0@5B3;P0000000197PC66t3d0020BH15CkQp,0*3F", "!AIVDM,2,2,3,A,13kQp3PB@00,2*3E"]
+// let res = decoder.decode(msg[0])
+// console.log(res)
 
 // const msg = ["!AIVDM,2,1,1,B,58SK5`p00001QHLkB20P4V0@4pN3;?R2222222168`:77t0Ht03Qj2Dkk`88,0*44",
 //     "!AIVDM,2,2,1,B,88888888880,2*26"]
-// for (let i = 0; i < msg.length; i++) {
-//     decoder.decode(msg[i])
-// }
+for (let i = 0; i < msg.length; i++) {
+    decoder.decode(msg[i])
+}
 
 // const msg = ["!AIVDM,2,1,1,B,58SK5`p00001QHLkB20P4V0@4pN3;?R2222222168`:77t0Ht03Qj2Dkk`88,0*44",
 //     "!AIVDM,2,2,1,B,88888888880,2*26"]

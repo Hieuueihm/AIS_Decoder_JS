@@ -87,7 +87,7 @@ if (partNum == 0) {
 }
 return {
     ...baseMessage,
-    partNum: partNum
+    partNum: partNum,
     name: name,
     partNum: partNum,
     typeAndCargo: typeAndCargo,
