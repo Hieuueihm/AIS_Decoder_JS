@@ -40,8 +40,8 @@ def decode_ais_messages(input_file, output_file):
         time.sleep(2)
 
 # Specify the input and output file names
-input_file = 'clean_output.txt'
-output_file = 'output.txt'
+input_file = 'encoder/output_ais.txt'
+output_file = 'output_ais.txt'
 
 # Decode AIS messages and write to output file
 decode_ais_messages(input_file, output_file)
