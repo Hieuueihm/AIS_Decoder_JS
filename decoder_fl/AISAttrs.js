@@ -28,6 +28,7 @@ if (messageType == 1 || messageType == 2 || messageType == 3 || messageType == 1
         MSSI: mmsi,
         last_updated_ts: timestamp_now,
         aisStation: "Cát Lái",
+        nation: nation
     };
 
     return {
@@ -37,7 +38,6 @@ if (messageType == 1 || messageType == 2 || messageType == 3 || messageType == 1
             datas: datas,
         },
         status: navigational_status,
-        nation: nation
 
     };
 }
@@ -162,6 +162,7 @@ else if (messageType == 5) {
         MSSI: mmsi,
         last_updated_ts: timestamp_now,
         aisStation: "Cát Lái",
+        nation: nation
     }
 
 

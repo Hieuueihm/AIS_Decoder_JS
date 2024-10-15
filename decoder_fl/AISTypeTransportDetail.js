@@ -40,6 +40,6 @@ else if (transport_type_code[0] == 8) {
 
 } else if (transport_type_code == 35) {
     return "engaged-in-military-operations"
-
-
+} else {
+    return "different"
 }

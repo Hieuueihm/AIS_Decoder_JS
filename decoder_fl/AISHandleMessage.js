@@ -26,7 +26,7 @@ if (sentences.length <= 1) {
     decoded_time = Date.now() - startTime;
 } else if (sentences.length >= 2) {
     let _payload = sentences[0].payload;
-    for (let i = 2; i < sentences.length; i++) {
+    for (let i = 1; i < sentences.length; i++) {
         _payload += sentences[i].payload;
     }
     decoded_message = await me.AIS_Decode_One_Message({ payload: _payload, channel: sentences[0].channel })
@@ -98,11 +98,9 @@ if (
 ) {
     let status = attrs?.status;
     let datas = attrs?.dataHistory
-    let nation = attrs?.nation
     res = await me.UpsertAttributeWs({ device_id: device_id, attrs: datas, ts: timestamp })
     res = await Thing(device_id).UpsertAttributes({
         status: status,
-        nation: nation
     }, {
         notSendWs: false,
         entityType: "DEVICE",
@@ -115,10 +113,10 @@ if (
     let name = attrs?.name;
     // res = await me.UpsertAttributeWs({ device_id: device_id, attrs: dataDes, ts: timestamp })
     res = await Thing(device_id).UpsertAttributes({
+        ...dataDes,
+        ...dataInfo,
         signalCall: attrs?.signalCall,
-        dataDes,
         name: name,
-        dataInfo: dataInfo,
         type_transport: type_transport,
         type_transport_detail: type_transport_detail
     }, {
@@ -138,11 +136,11 @@ else if (messageType == 24) {
     } else {
         let type_transport = attrs?.type_transport;
         let type_transport_detail = attrs?.type_transport_detail
-        let dataDes = attrs?.dataInfo
+        let dataInfo = attrs?.dataInfo
         res = await Thing(device_id).UpsertAttributes({
+            ...dataInfo,
             type_transport: type_transport,
             type_transport_detail: type_transport_detail,
-            dataDes,
             signalCall: attrs?.signalCall,
 
         }, {
@@ -178,11 +176,11 @@ else if (messageType == 19) {
     let dataInfo = attrs?.dataInfo;;
     let name = attrs?.name
     res = await Thing(device_id).UpsertAttributes({
+        ...dataInfo,
         name: name,
         type_transport: type_transport,
         type_transport_detail: type_transport_detail,
         status: status,
-        dataInfo
     }, {
         logged: false,
         entityType: "DEVICE",

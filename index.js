@@ -7,8 +7,10 @@ const decoder = new AISDecoder();
 // console.log(res)
 
 let startTime = Date.now();
-const msg = ["!AIVDO,2,1,0,A,58StHEh0000000000000000000000000000000162@400000000000000000,0*19",
-    "!AIVDO,2,2,0,A,00000000000,2*26"]
+
+
+const msg = ["!AIVDM,2,1,4,A,58Sqg202:2vG=M5B220pEN0LthB2222222222216APKB86AE0>R3kWi0EH<<,0*1E",
+    "!AIVDM,2,2,4,A,<<<<<<<<<<0,2*20"]
 for (let i = 0; i < msg.length; i++) {
     decoder.decode(msg[i])
 }

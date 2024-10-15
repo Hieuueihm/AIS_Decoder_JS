@@ -195,7 +195,7 @@ try:
         print("data: ", data)
 
         while data:
-            time.sleep(0.1)
+            time.sleep(0.05)
             client_socket.sendall(data.encode('utf-8'))
             print(f"Sent: {data}")
 

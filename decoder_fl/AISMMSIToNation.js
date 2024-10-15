@@ -1,3 +1,6 @@
+if (mmsi.length != 9) {
+    return "Undefined"
+}
 let mid = mmsi.substring(0, 3);
 if (mid <= 200 || mid > 775) {
     return "Undefined"
