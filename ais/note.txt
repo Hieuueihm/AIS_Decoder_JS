@@ -1,0 +1,183 @@
+Position messages
+AIS position messages mostly broadcast information about a vessel’s physical location and motion.
+
+This includes a vessel’s MMSI number, longitude, latitude, rate of turn, speed, true heading, and other parameters.
+
+Spire offers the following position messages to customers:
+
+Messages 1, 2, and 3 from Class A vessels
+Message 4 from base stations
+Message 18 from Class B vessels
+Message 27 from Class A or B vessels (for long-range applications)
+The Nominal Reporting Interval for Class A and B vessels traveling at most 3 knots and 2 knots respectively, or when Anchored/Moored, 
+is a broadcast every 3 minutes.
+
+
+Static messages
+AIS static messages mostly broadcast information about vessel characteristics that should remain (relatively) static over the during of their voyage.
+
+This includes a vessel’s MMSI number, AIS version number, IMO number, call sign, name, type of ship/cargo, ship dimensions, destination, and other parameters.
+
+Spire offers the following static messages to customers:
+
+Message 5 from Class A vessels
+Message 24 from Class B vessels
+The Nominal Reporting Interval for both Class A and B vessels
+ is a broadcast static message every 6 minutes, when an information change has been made, or upon request.
+
+Message 6
+Addressed binary Message
+Message 7
+Binary acknowledge
+Message 8
+Binary broadcast Message
+Message 9
+Standard search and rescue aircraft position report
+Message 10
+Coordinated universal time and date inquiry
+Message 11
+Coordinated universal time/date response
+Message 12
+Addressed safety related Message
+Message 14
+Safety related broadcast Message
+Message 15
+Interrogation
+Message 16
+Assigned mode command
+Message 17
+Global navigation-satellite system broadcast binary Message
+Message 20
+Data link management Message
+Message 21
+Aids-to-navigation report
+
+
+AIS Format
+Field 1 -> !AIVDM
+Field 2 -> count of fragments
+Fiedl 3 -> fragment number
+Field 4 -> Sequential Message ID for multi-sentence message
+Field 5 -> A or B radio channel 
+Fiedl 6 -> Data payload
+Filed 7 -> the number of fill bits requires to pad the data payload to a 6 bit boundary, ranging from 0 to 5 
+after * CRC validation code 
+
+01
+
+Position Report Class A
+
+02
+
+Position Report Class A (Assigned schedule)
+
+03
+
+Position Report Class A (Response to interrogation)
+
+04
+
+Base Station Report
+
+05
+
+Static and Voyage Related Data
+
+06
+
+Binary Addressed Message
+
+07
+
+Binary Acknowledge
+
+08
+
+Binary Broadcast Message
+
+09
+
+Standard SAR Aircraft Position Report
+
+10
+
+UTC and Date Inquiry
+
+11
+
+UTC and Date Response
+
+12
+
+Addressed Safety Related Message
+
+13
+
+Safety Related Acknowledgement
+
+14
+
+Safety Related Broadcast Message
+
+15
+
+Interrogation
+
+16
+
+Assignment Mode Command
+
+17
+
+DGNSS Binary Broadcast Message
+
+18
+
+Standard Class B CS Position Report
+
+19
+
+Extended Class B Equipment Position Report
+
+20
+
+Data Link Management
+
+21
+
+Aid-to-Navigation Report
+
+22
+
+Channel Management
+
+23
+
+Group Assignment Command
+
+24
+
+Static Data Report
+
+25
+
+Single Slot Binary Message,
+
+26
+
+Multiple Slot Binary Message With Communications State
+
+27
+
+Position Report For Long-Range Applications
+
+In normal operation, an AIS transceiver will broadcast a position report (type 1, 2, or 3) every 2 to 10 seconds depending on
+ the vessel’s speed while underway, and every 3 minutes while the vessel is at anchor and stationary. 
+
+
+!AIVDM,1,1,,B,15BQB8001g1fBnnE=3QH26JR00S@,0*56 ->
+15BQB001g1f
+
+1 = 0001
+5 = 0101
+ -> 00010101

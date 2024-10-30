@@ -1,0 +1,15 @@
+type 1, 2, 3 -- bản tin vị trí của thiết bị class A
+{'msg_type': 1, 'repeat': 0, 'mmsi': 431100405, 'status': <NavigationStatus.UnderWayUsingEngine: 0>, 'turn': 0.0, 'speed': 0.0, 'accuracy': True, 'lon': 139.718525, 'lat': 35.220582, 'course': 273.5, 'heading': 221, 'second': 16, 'maneuver': <ManeuverIndicator.NotAvailable: 0>,
+ 'spare_1': b'\x00', 'raim': True, 'radio': 33364}
+{'msg_type': 2, 'repeat': 0, 'mmsi': 205212390, 'status': <NavigationStatus.UnderWayUsingEngine: 0>, 
+'turn': <TurnRate.NO_TI_DEFAULT: -128.0>, 'speed': 0.0, 'accuracy': True, 'lon': 4.374617, 'lat': 51.246382, 'course': 267.5, 'heading': 511, 'second': 15, 'maneuver': <ManeuverIndicator.NotAvailable: 0>, 'spare_1': b'\x00', 'raim': True, 'radio': 82319}
+{'msg_type': 3, 'repeat': 0, 'mmsi': 477213600, 'status': <NavigationStatus.Moored: 5>, 'turn': 0.0, 
+'speed': 0.0, 'accuracy': True, 'lon': 126.605467, 'lat': 37.460617, 'course': 39.0, 'heading': 252, 'second': 12, 'maneuver': <ManeuverIndicator.NotAvailable: 0>, 'spare_1': b'\x00', 'raim': False, 'radio': 0}
+Thông tin về trạm phát --{'msg_type': 4, 'repeat': 0, 'mmsi': 2241066, 'year': 2012, 'month': 3, 
+'day': 14, 'hour': 11, 'minute': 29, 'second': 47, 'accuracy': False, 'lon': -0.324923, 'lat': 39.872255, 'epfd': <EpfdType.Surveyed: 7>, 'spare_1': b'\x00\x00', 'raim': False, 'radio': 2250}
+Thông tin static -- {'msg_type': 5, 'repeat': 0, 'mmsi': 257001000, 'ais_version': 0, 'imo': 0, 
+'callsign': 'LAMA', 'shipname': 'KS NORGE', 'ship_type': <ShipType.OtherType: 90>, 'to_bow': 30, 'to_stern': 50, 'to_port': 12, 'to_starboard': 0, 'epfd': <EpfdType.GPS: 1>, 'month': 0, 'day': 0, 'hour': 0, 'minute': 0, 'draught': 5.0, 'destination': 'OSLO', 'dte': False, 'spare_1': b'\x00'}
+Class B position report
+{'msg_type': 18, 'repeat': 0, 'mmsi': 412433159, 'reserved_1': 0, 'speed': 5.4,
+ 'accuracy': False, 'lon': 118.91836, 'lat': 24.874767, 'course': 2.4, 'heading': 480, 'second': 0, 'reserved_2': 0, 'cs': True, 'display': False, 'dsc': False, 'band': True, 'msg22': False, 'assigned': False, 'raim': False, 'radio': 917504}
+

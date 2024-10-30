@@ -1,0 +1,21 @@
+dynamic (123)
+	- lat, lon, status, heading (direction), speed, 
+	18
+	- speed, lat, lon, heading, speed
+	19
+	- speed, lat, lon, heading, name, ship type, ship size
+static 5
+	- name, ship type, ship size, destination, eta, callsign
+	24
+	- name, ship type, ship size, callsign, 
+
+
+chia thanfh 
+ lat, lon, heading, speed
+ status
+ name
+ ship type, ship size
+ destination, eta
+ callsign
+ 
+ 

@@ -1,0 +1,8 @@
+{
+    "files.associations": {
+        "array": "cpp",
+        "compare": "cpp",
+        "cstdint": "cpp"
+    },
+    "cmake.sourceDirectory": "D:/ais/My/ais_decoder"
+}

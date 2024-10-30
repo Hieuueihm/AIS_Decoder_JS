@@ -1,0 +1,11 @@
+Decoded AIS data: {'msg_type': 24, 'repeat': 0, 'mmsi': 436406784, 'partno': 0, 'shipname': '', 'spare_1': b'\x00'}
+Decoded AIS data: {'msg_type': 24, 'repeat': 0, 'mmsi': 436406784, 'partno': 0, 'shipname': '', 'spare_1': b'\x00'}
+Decoded AIS data: {'msg_type': 24, 'repeat': 0, 'mmsi': 436406784, 'partno': 0, 'shipname': '', 'spare_1': b'\x00'}
+Decoded AIS data: {'msg_type': 24, 'repeat': 0, 'mmsi': 436406784, 'partno': 0, 'shipname': '', 'spare_1': b'\x00'}
+Decoded AIS data: {'msg_type': 24, 'repeat': 0, 'mmsi': 436406784, 'partno': 0, 'shipname': '', 'spare_1': b'\x00'}
+Decoded AIS data: {'msg_type': 24, 'repeat': 0, 'mmsi': 436406928, 'partno': 0, 'shipname': '', 'spare_1': b'\x00'}
+Decoded AIS data: {'msg_type': 5, 'repeat': 0, 'mmsi': 431100155, 'ais_version': 0, 'imo': 9108661, 'callsign': 'JG5338', 'shipname': 'KINRYU MARU', 'ship_type': <ShipType.Tanker: 80>, 'to_bow': 83, 'to_stern': 21, 'to_port': 6, 'to_starboard': 9, 'epfd': <EpfdType.GPS: 1>, 'month': 3, 'day': 15, 'hour': 8, 'minute': 0, 'draught': 6.5, 'destination': '>JP CHB 3(NARITA)', 'dte': False, 'spare_1': b'\x00'}
+Decoded AIS data: {'msg_type': 1, 'repeat': 0, 'mmsi': 227006760, 'status': <NavigationStatus.UnderWayUsingEngine: 0>, 'turn': <TurnRate.NO_TI_DEFAULT: -128.0>, 'speed': 0.0, 'accuracy': False, 'lon': 0.13138, 'lat': 49.475577, 'course': 36.7, 'heading': 511, 'second': 14, 'maneuver': <ManeuverIndicator.NotAvailable: 0>, 'spare_1': b'\x00', 'raim': False, 'radio': 22136}
+Decoded AIS data: {'msg_type': 24, 'repeat': 0, 'mmsi': 436406784, 'partno': 0, 'shipname': '', 'spare_1': b'\x00'}
+Decoded AIS data: {'msg_type': 24, 'repeat': 0, 'mmsi': 436406928, 'partno': 0, 'shipname': '', 'spare_1': b'\x00'}
+Decoded AIS data: {'msg_type': 5, 'repeat': 0, 'mmsi': 431100155, 'ais_version': 0, 'imo': 9108661, 'callsign': 'JG5338', 'shipname': 'KINRYU MARU', 'ship_type': <ShipType.Tanker: 80>, 'to_bow': 83, 'to_stern': 21, 'to_port': 6, 'to_starboard': 9, 'epfd': <EpfdType.GPS: 1>, 'month': 3, 'day': 15, 'hour': 8, 'minute': 0, 'draught': 6.5, 'destination': '>JP CHB 3(NARITA)', 'dte': False, 'spare_1': b'\x00'}
